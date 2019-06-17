@@ -1,11 +1,11 @@
-class Triviapi {
+class TriviaApi {
 
   constructor(){
     this.baseURL = 'https://opentdb.com/api.php';
         
   }
 
-  listApiFetch(...args) { 
+  _listApiFetch(...args) { 
     let error; 
     return fetch(...args) 
       .then(res => {
@@ -27,29 +27,33 @@ class Triviapi {
         return data; 
       });
   }
-    
-  getQuestionData() {
-    let qData={};
-    this.listApiFetch(`${this.baseURL}?amount=1`)
+  
+  _transferApiToQuestionFormat(qData,data){
+    qData.text=data['question'];
+    qData.answers=[...data['incorrect_answers']];
+    let randomIndex=Math.floor(Math.random()*(qData.answers.length+1));
+    qData.answers.splice(randomIndex, 0, data['correct_answer']);
+    qData.correctAnswer=data['correct_answer'];
+  }
+
+  getQuestionsData(num) {
+    return this._listApiFetch(`${this.baseURL}?amount=${num}`)
       .then(resJson => {
-        let data = resJson['results'][0];
-        console.log(data);        
-        qData.text=data['question'];
-        qData.answers=[...data['incorrect_answers']];
-        let randomIndex=Math.floor(Math.random()*(qData.answers.length+1));
-        console.log(randomIndex);
-        qData.answers.splice(randomIndex, 0, data['correct_answer']);
-        qData.correctAnswer=data['correct_answer'];
-      })
-      .catch(error => {
-        console.log(error.message);
+        let arrQData=[];
+        let data;
+        for(let i=0;i<num;i++){
+          data = resJson['results'][i];
+          arrQData.push({});
+          this._transferApiToQuestionFormat(arrQData[i],data); 
+        }
+        return arrQData;  
       })
     ;
-    return qData;
   }
 
 
 
 }
 
-export default Triviapi;
+
+export default TriviaApi;
