@@ -38,12 +38,7 @@ class Triviapi {
         qData.answers=[...data['incorrect_answers']];
         let randomIndex=Math.floor(Math.random()*(qData.answers.length+1));
         console.log(randomIndex);
-        if (randomIndex===qData.answers.length){
-          qData.answers.push(data['correct_answer']);
-        }
-        else{    
-          qData.answers.splice(randomIndex, 0, data['correct_answer']);
-        }
+        qData.answers.splice(randomIndex, 0, data['correct_answer']);
         qData.correctAnswer=data['correct_answer'];
       })
       .catch(error => {
@@ -58,5 +53,3 @@ class Triviapi {
 }
 
 export default Triviapi;
-let obj= new Triviapi();
-console.log(obj.getQuestionData());
