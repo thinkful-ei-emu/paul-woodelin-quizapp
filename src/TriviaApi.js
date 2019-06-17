@@ -1,4 +1,4 @@
-class Triviapi {
+class TriviaApi {
 
   constructor(){
     this.baseURL = 'https://opentdb.com/api.php';
