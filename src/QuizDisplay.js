@@ -1,6 +1,5 @@
 import $ from 'jQuery';
 import Renderer from './lib/Renderer';
-import $ from 'jQuery';
 
 
 class QuizDisplay extends Renderer {
