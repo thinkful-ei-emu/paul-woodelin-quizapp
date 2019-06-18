@@ -87,13 +87,6 @@ class QuizDisplay extends Renderer {
     event.preventDefault();
     let answer=$('input[name=aAnswer]:checked').val();
     this.model.submitAnswer(answer);
-
-    let answer=$('input[name=aAnswer]:checked').val();
-    this.model.submitAnswer(answer);
-
-
-
-
   }
 
 
@@ -101,15 +94,11 @@ class QuizDisplay extends Renderer {
     event.preventDefault();
     this.model.nextQuestion();
 
-     this.model.nextQuestion();
-
   }
 
 
   handlePlayAgain (event){
     event.preventDefault();
-    this.model.start();
-
     this.model.start();
 
   }
