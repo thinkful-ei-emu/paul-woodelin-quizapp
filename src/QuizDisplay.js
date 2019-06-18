@@ -13,13 +13,13 @@ class QuizDisplay extends Renderer {
 
     if (!this.model.active && this.model.askedQuestions.length === 0) {
       return `
-          <p> Welcome to our trivia quiz. Test your smart and see how high you can score. </p>
+          <p> Welcome to our trivia quiz. Test your smarts and see how high you can score. </p>
           <button class = "start"> Start </button>
       `;
     }
     if(this.model.active && this.model.getCurrentQuestion().answerStatus() === -1){
       
-      let html=`<span> ${currentQ.text}</span>`;
+      let html=`<p> ${currentQ.text}</p>`;
       for(let i=0;i<currentQ.answers.length;i++){
         html+=`
         <input type="radio" id="currentPossibleAnswer${i}" name="aAnswer" value="${currentQ.answers[i]}">
@@ -31,34 +31,38 @@ class QuizDisplay extends Renderer {
     } if(this.model.active && this.model.getCurrentQuestion().answerStatus() === 1){
       return `
       
-      <span> ${currentQ.text} </span> 
+      <p> ${currentQ.text} </p> 
       
-      <p> You got it !. the correct answer was</p>  
+      <p> You got it! The correct answer was</p>  
       
-      <span> ${currentQ.correctAnswer} </span>
+      <p> ${currentQ.correctAnswer} </p>
       
-      <button class = "continue">continue</button>
-      `
+      <button class = "continue">Continue</button>
+      `;
     } if(this.model.active && this.model.getCurrentQuestion().answerStatus() === 0){
       return `
-      <span> ${currentQ.text} </span> 
+      <p> ${currentQ.text} </p> 
 
-      <p> Sorry that was incorrect. you answered</p>
+      <p> Sorry that was incorrect. <br> You answered</p>
 
-      <span> ${currentQ.userAnswer}</span>
+      <p> ${currentQ.userAnswer}</p>
 
       <p> The correct answer was</p>
 
-      <span> ${currentQ.correctAnswer} </span>
+      <p> ${currentQ.correctAnswer} </p>
 
-      <button class = "continue">continue</button>
-      `
+      <button class = "continue">Continue</button>
+      `;
     } if (!this.model.active && this.model.scoreHistory.length > 0){
-         let html =  `
-         <p> Good Job! your final score was ${this.model.score} out of ${this.score.correctAnswer} </p>         
-         `
+      let html =  `
+         <p> Good Job! </p> <p> Your final score was ${this.model.score} out of ${this.model.numberOfQuestions} </p>         
+         `;
 
-         if(this)
+      if(this.model.updateHighestScore()){
+        html+='<p>That\'s a new high score!</p>';
+      }
+      html+='<button class = "playAgain">Play Again</button>';
+      return html;
          
     }      
     

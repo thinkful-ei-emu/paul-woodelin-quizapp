@@ -4,22 +4,32 @@ import TriviaApi from './TriviaApi';
 import Model from './lib/Model';
 
 class Quiz extends Model{
-
-  constructor(){
+  constructor(numberOfQs=5){
     super();
     this.unasked=[];
     this.asked=[];
     this.score=0;
     this.scoreHistory=[];
     this.active=false;
+    this.numberOfQuestions=numberOfQs;
+    this.highestScore=0;
+  }
+
+  updateHighestScore(){
+    if (this.score>this.highestScore){
+      this.highestScore=this.score;
+      return true;
+    }
+    return false;
   }
   
   start() {
+    this.score = 0;
+    this.asked = [];
     let api = new TriviaApi();
-    let num=5;
-    api.getQuestionsData(num)
+    api.getQuestionsData(this.numberOfQuestions)
       .then(arrQData=>{
-        for(let i=0;i<num;i++){
+        for(let i=0;i<this.numberOfQuestions;i++){
           this.unasked.push(new Question(arrQData[i]));
         }
         this.asked.push(this.unasked.pop());
@@ -46,8 +56,6 @@ class Quiz extends Model{
     if(this.unasked.length === 0){
       this.active=false;
       this.scoreHistory.push(this.score);
-      this.score = 0;
-      this.asked = [];
       this.update();
       return 'reset';
     } else {
