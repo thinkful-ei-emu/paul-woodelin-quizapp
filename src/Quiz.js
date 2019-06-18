@@ -17,13 +17,14 @@ class Quiz extends Model{
   start() {
     let api = new TriviaApi();
     let num=5;
-    return api.getQuestionsData(num)
+    api.getQuestionsData(num)
       .then(arrQData=>{
         for(let i=0;i<num;i++){
           this.unasked.push(new Question(arrQData[i]));
         }
         this.asked.push(this.unasked.pop());
         this.active = true;
+        this.update();
         return 1;
       }) 
       .catch(error => {
@@ -31,6 +32,8 @@ class Quiz extends Model{
         return 0;
       });
   }
+
+  
 
   getCurrentQuestion(){
     return this.asked[this.asked.length-1];
@@ -45,9 +48,11 @@ class Quiz extends Model{
       this.scoreHistory.push(this.score);
       this.score = 0;
       this.asked = [];
+      this.update();
       return 'reset';
     } else {
       this.asked.push(this.unasked.pop());
+      this.update();
       return true;
     }
   }
@@ -61,9 +66,14 @@ class Quiz extends Model{
       return false;
     }
     currentQ.submitAnswer(answer);
+    this.update();
     if(currentQ.answerStatus()===1){
       this.score++;
+      this.update();
       return true;
+    } else {
+      this.update();
+      return false;
     }
   }
 }
