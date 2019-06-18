@@ -1,5 +1,7 @@
+import $ from 'jQuery';
 import Renderer from './lib/Renderer';
 import $ from 'jQuery';
+
 
 class QuizDisplay extends Renderer {
 
@@ -83,6 +85,8 @@ class QuizDisplay extends Renderer {
 
   handleSubmitAnswer (event){
     event.preventDefault();
+    let answer=$('input[name=aAnswer]:checked').val();
+    this.model.submitAnswer(answer);
 
     let answer=$('input[name=aAnswer]:checked').val();
     this.model.submitAnswer(answer);
@@ -95,6 +99,7 @@ class QuizDisplay extends Renderer {
 
   handleNext (event){
     event.preventDefault();
+    this.model.nextQuestion();
 
      this.model.nextQuestion();
 
@@ -103,6 +108,7 @@ class QuizDisplay extends Renderer {
 
   handlePlayAgain (event){
     event.preventDefault();
+    this.model.start();
 
     this.model.start();
 
