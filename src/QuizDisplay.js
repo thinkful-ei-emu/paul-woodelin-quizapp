@@ -11,37 +11,20 @@ class QuizDisplay extends Renderer {
     if (!this.model.active && this.model.askedQuestions.length === 0) {
       return `
           <p> Welcome to our trivia quiz. Test your smart and see how high you can score. </p>
-          <button class = "start"> start </button>
+          <button class = "start"> Start </button>
       `;
     }
     if(this.model.active && this.model.getCurrentQuestion().answerStatus() === -1){
-        return `
-      <span> ${this.getCurrentQuestion().text}</span>
-          <div>
-              <input type="radio" id="huey" name="drone" value="huey"
-                checked>
-              <label for="huey">${this.model.getCurrentQuestion()}</label>
-              </div>
-
-              <div>
-              <input type="radio" id="dewey" name="drone" value="dewey">
-              <label for="dewey">${this.model.getCurrentQuestion()}</label>
-              </div>
-
-              <div>
-              <input type="radio" id="louie" name="drone" value="louie">
-              <label for="louie">${this.model.getCurrentQuestion()}</label>
-              </div>
-
-
-              <div>
-              <input type="radio" id="louie" name="drone" value="louie">
-              <label for="louie">${this.model.getCurrentQuestion()}</label>
-          </div>
-
+      let currentQ=this.getCurrentQuestion();
+      let html=`<span> ${currentQ.text}</span>`;
+      for(let i=0;i<currentQ.answers.length;i++){
+        html+=`
+        <input type="radio" id="currentPossibleAnswer${i}" name="aAnswer" value="${currentQ.answers[i]}">
+        <label for="currentPossibleAnswer${i}">${currentQ.answers[i]}</label>`;
+      }
+      html+='<button class="submitAnswer"> Submit </button>';
+      return html;
         
-        
-        `
     }
   }
 
