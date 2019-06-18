@@ -30,27 +30,38 @@ class Quiz {
       });
   }
 
+  getCurrentQuestion(){
+    return this.asked[this.asked.length-1];
+  }
+
   nextQuestion() {
+    if(this.getCurrentQuestion().answerStatus()===-1){
+      return false;
+    }
     if(this.unasked.length === 0){
       this.active=false;
       this.scoreHistory.push(this.score);
       this.score = 0;
       this.asked = [];
-      return false;
+      return 'reset';
     } else {
       this.asked.push(this.unasked.pop());
+      return true;
     }
   }
 
   submitAnswer(answer){
-    let currentQ=this.asked[this.asked.length-1];
+    let currentQ=this.getCurrentQuestion();
+    if(!currentQ){
+      return false;
+    }
+    if(currentQ.answerStatus()!==-1){
+      return false;
+    }
     currentQ.submitAnswer(answer);
     if(currentQ.answerStatus()===1){
       this.score++;
       return true;
-    }
-    else{
-      return false;
     }
   }
 }
