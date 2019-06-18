@@ -18,7 +18,7 @@ body{
   padding:1em;
   display:flex;
   flex-direction:row;
-  justify-content: space-evenly;
+  justify-content: space-around;
 }
 .status{
   width:100%;

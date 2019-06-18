@@ -8,10 +8,10 @@ class QuizDisplay extends Renderer {
       <div>High Score: ${this.model.highestScore}</div>
       `;
     if(this.model.active){
-      html+=`<div>Progess: ${this.model.numberOfQuestions-this.model.unasked.length} of ${this.model.numberOfQuestions}</div>`;
+      html+=`<div>Progress: ${this.model.numberOfQuestions-this.model.unasked.length} of ${this.model.numberOfQuestions}</div>`;
     }
     else{
-      html+='<div>Progess: Inactive</div>';
+      html+='<div>Progress: Inactive</div>';
     }
     html+='</div>';
     return html;
