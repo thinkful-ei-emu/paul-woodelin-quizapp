@@ -1,10 +1,12 @@
 import Question from './Question';
 
 import TriviaApi from './TriviaApi';
+import Model from './lib/Model';
 
-class Quiz {
+class Quiz extends Model{
 
   constructor(){
+    super();
     this.unasked=[];
     this.asked=[];
     this.score=0;
