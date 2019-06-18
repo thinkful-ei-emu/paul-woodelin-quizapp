@@ -1,3 +1,5 @@
+import 'normalize.css';
+import './index.css';
 import $ from 'jquery';
 import Quiz from './Quiz';
 import QuizDisplay from './QuizDisplay';

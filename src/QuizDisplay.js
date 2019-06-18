@@ -15,43 +15,45 @@ class QuizDisplay extends Renderer {
 
     if (!this.model.active && this.model.asked.length === 0) {
       return `
-          <p> Welcome to our trivia quiz. Test your smarts and see how high you can score. </p>
+          <p> Welcome to our trivia quiz.</p><p> Test your smarts and see how high you can score. </p>
           <button class = "start"> Start </button>
       `;
     }
     if(this.model.active && this.model.getCurrentQuestion().answerStatus() === -1){
       
-      let html=`<p> ${currentQ.text}</p>`;
+      let html=`<p class="question-block"> ${currentQ.text}</p>`;
+      html+='<fieldset> <legend>Choose one</legend>';
       for(let i=0;i<currentQ.answers.length;i++){
         html+=`
         <input type="radio" id="currentPossibleAnswer${i}" name="aAnswer" value="${currentQ.answers[i]}">
-        <label for="currentPossibleAnswer${i}">${currentQ.answers[i]}</label>`;
+        <label for="currentPossibleAnswer${i}">${currentQ.answers[i]}</label> <br>`;
       }
+      html+='</fieldset>';
       html+='<button class="submitAnswer"> Submit </button>';
       return html;
         
     } if(this.model.active && this.model.getCurrentQuestion().answerStatus() === 1){
       return `
       
-      <p> ${currentQ.text} </p> 
+      <p class="question-block"> ${currentQ.text} </p> 
       
-      <p> You got it! The correct answer was</p>  
+      <p> You got it!</p><p>The correct answer was:</p>  
       
-      <p> ${currentQ.correctAnswer} </p>
+      <p class="correct-answer"> ${currentQ.correctAnswer} </p>
       
       <button class = "continue">Continue</button>
       `;
     } if(this.model.active && this.model.getCurrentQuestion().answerStatus() === 0){
       return `
-      <p> ${currentQ.text} </p> 
+      <p class="question-block"> ${currentQ.text} </p> 
 
-      <p> Sorry that was incorrect. <br> You answered</p>
+      <p> Sorry that was incorrect. <br> You answered:</p>
 
-      <p> ${currentQ.userAnswer}</p>
+      <p class="incorrect-answer"> ${currentQ.userAnswer}</p>
 
-      <p> The correct answer was</p>
+      <p> The correct answer was:</p>
 
-      <p> ${currentQ.correctAnswer} </p>
+      <p class="correct-answer"> ${currentQ.correctAnswer} </p>
 
       <button class = "continue">Continue</button>
       `;

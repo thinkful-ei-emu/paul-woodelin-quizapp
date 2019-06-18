@@ -38,12 +38,13 @@ class TriviaApi {
   }
 
   getQuestionsData(num) {
-    return this._listApiFetch(`${this.baseURL}?amount=${num}?&encode=url3986`)
+    return this._listApiFetch(`${this.baseURL}?amount=${num}&encode=url3986`)
       .then(resJson => {
         let arrQData=[];
         let data;
         for(let i=0;i<num;i++){
           data = resJson['results'][i];
+          console.log(data);
           arrQData.push({});
           this._transferApiToQuestionFormat(arrQData[i],data); 
         }

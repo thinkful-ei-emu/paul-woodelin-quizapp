@@ -5,7 +5,8 @@
   "main": "index.js",
   "mode": "development",
   "dependencies": {
-    "jquery": "^3.4.0"
+    "jquery": "^3.4.0",
+    "normalize.css": "^8.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
