@@ -29,15 +29,16 @@ class TriviaApi {
   }
   
   _transferApiToQuestionFormat(qData,data){
-    qData.text=data['question'];
-    qData.answers=[...data['incorrect_answers']];
+    qData.text=decodeURIComponent(data['question']);
+    qData.answers = [];
+    data['incorrect_answers'].forEach(value => qData.answers.push(decodeURIComponent(value)));
     let randomIndex=Math.floor(Math.random()*(qData.answers.length+1));
-    qData.answers.splice(randomIndex, 0, data['correct_answer']);
-    qData.correctAnswer=data['correct_answer'];
+    qData.answers.splice(randomIndex, 0, decodeURIComponent(data['correct_answer']));
+    qData.correctAnswer=decodeURIComponent(data['correct_answer']);
   }
 
   getQuestionsData(num) {
-    return this._listApiFetch(`${this.baseURL}?amount=${num}`)
+    return this._listApiFetch(`${this.baseURL}?amount=${num}?&encode=url3986`)
       .then(resJson => {
         let arrQData=[];
         let data;

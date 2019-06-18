@@ -1,4 +1,5 @@
 import Renderer from './lib/Renderer';
+import $ from 'jQuery';
 
 class QuizDisplay extends Renderer {
 
@@ -9,9 +10,9 @@ class QuizDisplay extends Renderer {
     // if quiz is inactive and no questions are asked yet, then
     // we're at the intro state of app
 
-    let currentQ=this.getCurrentQuestion();
+    let currentQ=this.model.getCurrentQuestion();
 
-    if (!this.model.active && this.model.askedQuestions.length === 0) {
+    if (!this.model.active && this.model.asked.length === 0) {
       return `
           <p> Welcome to our trivia quiz. Test your smarts and see how high you can score. </p>
           <button class = "start"> Start </button>
@@ -83,17 +84,27 @@ class QuizDisplay extends Renderer {
   handleSubmitAnswer (event){
     event.preventDefault();
 
+    let answer=$('input[name=aAnswer]:checked').val();
+    this.model.submitAnswer(answer);
+
+
+
+
   }
 
 
   handleNext (event){
     event.preventDefault();
 
+     this.model.nextQuestion();
+
   }
 
 
   handlePlayAgain (event){
     event.preventDefault();
+
+    this.model.start();
 
   }
 
@@ -109,5 +120,7 @@ class QuizDisplay extends Renderer {
     this.model.start();
   }
 }
+
+
 
 export default QuizDisplay;

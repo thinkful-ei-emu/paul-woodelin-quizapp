@@ -74,7 +74,6 @@ class Quiz extends Model{
       return false;
     }
     currentQ.submitAnswer(answer);
-    this.update();
     if(currentQ.answerStatus()===1){
       this.score++;
       this.update();
